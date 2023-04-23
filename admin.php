@@ -11,11 +11,24 @@ $userLoggedInObj = new User($con, $usernameLoggedIn);
 
 
 
-
-
-
 if (!$usernameLoggedIn) {
     header("Location: signIn");
+}
+
+if (isset($_GET['delete'])) {
+    $id = $_GET['delete'];
+    $query = $con->prepare("DELETE FROM users WHERE id = :id");
+    $query->bindParam(":id", $id);
+    $query->execute();
+}
+
+if (isset($_GET['changeRole'])) {
+    $role = $_GET['changeRole'];
+    $id = $_GET['id'];
+    $query = $con->prepare("UPDATE users SET role = :role WHERE id = :id");
+    $query->bindParam(":role", $role);
+    $query->bindParam(":id", $id);
+    $query->execute();
 }
 
 
@@ -38,16 +51,16 @@ if (!$usernameLoggedIn) {
                             Add Videos
                         </a>
                     </li>
-                    <li class="nav-item p-3">
+                    <!-- <li class="nav-item p-3">
                         <a href="#" class="list-group-item">
                             Add Vlogs
                         </a>
-                    </li>
-                    <li class="nav-item p-3">
+                    </li> -->
+                    <!-- <li class="nav-item p-3">
                         <a href="#" class="list-group-item">
                             Live Vlogs
                         </a>
-                    </li>
+                    </li> -->
                     <li class="nav-item p-3">
                         <a href="#" class="list-group-item ">
                             Change Password
@@ -64,7 +77,7 @@ if (!$usernameLoggedIn) {
             <div class="col-md-9 col-lg-9 main">
                 <h1 class="text-bold m-3">Admin Dashboard</h1>
 
-                <div class="row mb-3 text-center mt-2">
+                <!-- <div class="row mb-3 text-center mt-2">
                     <div class="col-xl-3 col-lg-6">
                         <div class="card card-inverse card-success">
                             <div class="card-block bg-success">
@@ -109,7 +122,7 @@ if (!$usernameLoggedIn) {
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <hr />
 
@@ -124,6 +137,7 @@ if (!$usernameLoggedIn) {
                             <th>Email</th>
                             <th>Role</th>
                             <th>Actions</th>
+                            <th>Update Role</th>
 
                         </tr>
                     </thead>
@@ -149,14 +163,28 @@ if (!$usernameLoggedIn) {
                             <td>$id</td>
                             <td>$name</td>
                             <td>$email</td>
-                           
                             <td>$role</td>
+
                             <td>
-                                <a href='editUser.php?id=$id' class='btn btn-primary btn-sm'>Edit</a>
-                                <a href='deleteUser.php?id=$id' class='btn btn-danger btn-sm'>Delete</a>
+                             <a href='deleteUser.php?id=$id' class='btn btn-danger btn-sm'>Delete</a>
                             </td>
+
+                            <td>
+                            <form action='updateRole.php' method='POST'>
+                            <input type='hidden' name='id' value='$id'>
+                            <select name='changeRole' id='changeRole' class='form-select form-select-sm' aria-label='.form-select-sm example' onchange='location = this.value;'>
+                               
+                                <option value='selected'>Change Role</option>
+                                    <option value='admin.php?changeRole=admin&id=$id'>Admin</option>
+                                    <option value='admin.php?changeRole=user&id=$id'>User</option>
+                            </select>
+                            
+                            </form>
+                            </td>
+
                         </tr>";
                         }
+                        // <a href='editUser.php?id=$id' class='btn btn-primary btn-sm'>Edit</a>
 
                         ?>
                     </tbody>

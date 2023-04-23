@@ -15,8 +15,8 @@
 						</p>
 
 						<div class="m-2">
-							<a class="btn btn-danger btn-lg mt-3" href="billing.php">Subscribe</a>
-							<a class="btn btn-outline-danger btn-lg mt-3 mx-2" href="#">Watch Later</a>
+							<a class="btn btn-danger btn-lg mt-3" href="billing.php">Thanks$</a>
+							<!-- <a class="btn btn-outline-danger btn-lg mt-3 mx-2" href="#">Watch Later</a> -->
 						</div>
 
 
